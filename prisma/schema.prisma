@@ -8,20 +8,25 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String?
+  sheets    Sheet[]
+  gameRooms GameRoom[]
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  viewCount Int      @default(0)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model GameRoom {
+  id              Int     @id @default(autoincrement())
+  master          User    @relation(fields: [masterId], references: [id])
+  masterId        Int
+  numberOfPlayers Int
+  sheets          Sheet[]
+}
+
+model Sheet {
+  id         Int       @id @default(autoincrement())
+  player     User      @relation(fields: [playerId], references: [id])
+  playerId   Int
+  gameRoom   GameRoom? @relation(fields: [gameRoomId], references: [id])
+  gameRoomId Int?
 }
