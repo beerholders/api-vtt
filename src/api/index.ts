@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { usersRouter } from "./users";
-import { signupRouter } from "./signup";
+import { validateAuthSession } from "@/middlewares/auth";
 
 const apiRouter = Router();
 
+apiRouter.use(validateAuthSession);
 apiRouter.use("/users", usersRouter);
-apiRouter.use("/signup", signupRouter);
 
 export { apiRouter };
