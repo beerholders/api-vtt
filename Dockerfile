@@ -7,7 +7,7 @@ RUN npm install
 
 COPY . .
 
-RUN npx prisma generate
-
 EXPOSE 3001
-CMD [ "npm", "run", "start" ]
+
+ENTRYPOINT ["/usr/src/app/bin/docker-entrypoint"]
+CMD [ "npm", "run", "dev" ]

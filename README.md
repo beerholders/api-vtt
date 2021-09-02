@@ -10,7 +10,13 @@ This repository is the API that supports the [Web VTT](https://github.com/beerho
 docker-compose build
 ```
 
-### 2. Start the REST API server
+### 2. Init the DB
+
+```
+docker-compose run --rm server init_db
+```
+
+### 3. Start the REST API server
 
 ```
 docker-compose up
@@ -78,7 +84,7 @@ model Post {
 Once you've updated your data model, you can execute the changes against your database with the following command:
 
 ```
-docker-compose run server npx prisma migrate dev --name add-profile
+docker-compose run --rm server migrate dev --name add-profile
 ```
 
 This adds another migration to the `prisma/migrations` directory and creates the new `Profile` table in the database.
