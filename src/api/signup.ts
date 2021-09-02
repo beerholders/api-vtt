@@ -1,10 +1,11 @@
 import { Router } from "express";
+import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
 import createError from "http-errors";
 import { omit } from "lodash";
 import { body, validationResult } from "express-validator";
 import prisma from "@/prisma";
-import { encryptPassword, generateAuthTokenForUser } from "@/middlewares/auth";
+import { generateAuthTokenForUser } from "@/middlewares/auth";
 
 const signupRouter = Router();
 
@@ -28,7 +29,7 @@ signupRouter.post(
         data: {
           name,
           email,
-          password: encryptPassword(password),
+          password: bcrypt.hashSync(password, 8),
         },
       });
 

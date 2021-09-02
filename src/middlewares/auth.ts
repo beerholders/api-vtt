@@ -14,10 +14,6 @@ if (!process.env.TOKEN_KEY) {
 
 const TOKEN_KEY = process.env.TOKEN_KEY ?? "vtt";
 
-export function encryptPassword(password: string) {
-  return bcrypt.hashSync(password, 8);
-}
-
 export function generateAuthTokenForUser({ id, email }: User) {
   const jwtSignature: JWTSignature = { userId: id, email };
   return jwt.sign(jwtSignature, TOKEN_KEY, {

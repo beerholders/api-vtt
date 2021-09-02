@@ -4,7 +4,7 @@ import createError from "http-errors";
 import { omit } from "lodash";
 import { body, validationResult } from "express-validator";
 import prisma from "@/prisma";
-import { encryptPassword, generateAuthTokenForUser } from "@/middlewares/auth";
+import { generateAuthTokenForUser } from "@/middlewares/auth";
 
 const loginRouter = Router();
 
