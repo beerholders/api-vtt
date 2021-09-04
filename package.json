@@ -7,7 +7,7 @@
     "url": "git://github.com/beerholders/api-vtt.git"
   },
   "scripts": {
-    "clean": "rm -r dist",
+    "clean": "rimraf dist",
     "build": "npm run clean && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist",
     "dev": "ts-node-dev --exit-child -r tsconfig-paths/register src/index.ts",
     "start": "node dist/src/index.js"
@@ -31,6 +31,7 @@
     "@types/lodash": "^4.14.172",
     "@types/node": "14.17.9",
     "prisma": "2.29.1",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.11.0",
