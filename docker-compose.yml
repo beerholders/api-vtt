@@ -1,0 +1,25 @@
+version: "2"
+services:
+  server:
+    build:
+      context: .
+    depends_on:
+      - mysql
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      DATABASE_URL: mysql://root:admin@mysql/vtt
+      TOKEN_KEY: batata
+  mysql:
+    image: mysql:5.7
+    command: --init-file /usr/src/init.sql
+    ports:
+      - "23306:3306"
+    volumes:
+      - ./init.sql:/usr/src/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_ROOT_PASSWORD

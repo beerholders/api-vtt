@@ -1,0 +1,57 @@
+#!/bin/bash
+set -e
+
+dev() {
+  echo "Starting dev server..."
+  exec npm run dev
+}
+
+prod() {
+  echo "Starting server..."
+  exec npm run start:prod
+}
+
+init_db() {
+  exec npx prisma migrate deploy
+}
+
+migrate() {
+  exec npx prisma migrate $*
+}
+
+help() {
+  echo "VTT Docker."
+  echo ""
+  echo "Usage:"
+  echo ""
+
+  echo "dev -- start dev server"
+  echo "prod -- start prod server"
+  echo "init_db -- initialize db"
+  echo "migrate [prisma args] -- execute prisma migration"
+}
+
+case "$1" in
+dev)
+  shift
+  dev
+  ;;
+prod)
+  shift
+  prod
+  ;;
+init_db)
+  init_db
+  ;;
+migrate)
+  shift
+  exec npx prisma migrate $*
+  ;;
+help)
+  shift
+  help
+  ;;
+*)
+  exec "$@"
+  ;;
+esac
