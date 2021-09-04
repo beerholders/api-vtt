@@ -1,8 +1,8 @@
 import { User } from "@prisma/client";
-import bcrypt from "bcryptjs";
 import { NextFunction, Response } from "express";
 import createError from "http-errors";
 import jwt from "jsonwebtoken";
+import { includes } from "lodash";
 import { JWTSignature } from "../types/JWTSignature";
 import { RequestWithUser } from "../types/RequestWithUser";
 
@@ -21,27 +21,35 @@ export function generateAuthTokenForUser({ id, email }: User) {
   });
 }
 
-export async function validateAuthSession(
-  req: RequestWithUser,
-  res: Response,
-  next: NextFunction
-) {
-  const token: string =
-    req.body.token ||
-    req.query.token ||
-    req.headers["x-access-token"] ||
-    req.cookies.token;
+/**
+ * Closure to get the express middleware with exception routes
+ * @param exceptions the list of exception routes
+ * @returns the validate auth session middleware
+ */
+export function getValidateAuthSessionWithExceptions(exceptions: string[]) {
+  return async (req: RequestWithUser, res: Response, next: NextFunction) => {
+    const token: string =
+      req.body.token ||
+      req.query.token ||
+      req.headers["x-access-token"] ||
+      req.cookies.token;
 
-  if (!token) {
-    return next(
-      new createError.Forbidden("A token is required for authentication")
-    );
-  }
-  try {
-    const decoded = jwt.verify(token, TOKEN_KEY) as JWTSignature;
-    req.user = decoded;
-  } catch (err) {
-    return next(new createError.Unauthorized("Invalid Token"));
-  }
-  return next();
+    if (includes(exceptions, req.path)) return next();
+
+    if (!token) {
+      return next(
+        new createError.Forbidden("A token is required for authentication")
+      );
+    }
+
+    try {
+      const decoded = jwt.verify(token, TOKEN_KEY) as JWTSignature;
+      req.user = decoded;
+    } catch (err) {
+      return next(new createError.Unauthorized("Invalid Token"));
+    }
+    return next();
+  };
 }
+
+export const validateAuthSession = getValidateAuthSessionWithExceptions([]);
