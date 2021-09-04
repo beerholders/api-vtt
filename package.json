@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
+    "dev": "ts-node-dev --exit-child -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node -r tsconfig-paths/register src/index.ts",
     "start": "ts-node -r tsconfig-paths/register src/index.ts"
   },
