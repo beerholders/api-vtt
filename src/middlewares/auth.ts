@@ -27,7 +27,10 @@ export async function validateAuthSession(
   next: NextFunction
 ) {
   const token: string =
-    req.body.token || req.query.token || req.headers["x-access-token"];
+    req.body.token ||
+    req.query.token ||
+    req.headers["x-access-token"] ||
+    req.cookies.token;
 
   if (!token) {
     return next(
