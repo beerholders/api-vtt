@@ -1,11 +1,16 @@
 {
-  "name": "rest-express",
+  "name": "api-vtt",
   "version": "1.0.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/beerholders/api-vtt.git"
+  },
   "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist",
     "dev": "ts-node-dev --exit-child -r tsconfig-paths/register src/index.ts",
-    "start:prod": "ts-node -r tsconfig-paths/register src/index.ts",
-    "start": "ts-node -r tsconfig-paths/register src/index.ts"
+    "start": "node dist/src/index.js"
   },
   "dependencies": {
     "@prisma/client": "2.29.1",
@@ -26,9 +31,11 @@
     "@types/lodash": "^4.14.172",
     "@types/node": "14.17.9",
     "prisma": "2.29.1",
-    "ts-node": "10.2.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.11.0",
+    "tscpaths": "0.0.9",
     "typescript": "4.3.5"
   }
 }
