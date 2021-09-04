@@ -34,7 +34,7 @@ signupRouter.post(
       });
 
       const token = generateAuthTokenForUser(result);
-      res.json({ ...omit(result, ["password"]), token });
+      res.cookie("token", token).json({ ...omit(result, ["password"]) });
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         // Unique constraint violation

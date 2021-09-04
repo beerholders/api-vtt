@@ -28,7 +28,7 @@ loginRouter.post(
 
     if (result && bcrypt.compareSync(password, result.password)) {
       const token = generateAuthTokenForUser(result);
-      return res.json({ ...omit(result, ["password"]), token });
+      return res.cookie("token", token).json({ ...omit(result, ["password"]) });
     }
 
     return next(new createError.BadRequest("Failed to login."));
