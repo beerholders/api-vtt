@@ -18,11 +18,11 @@ model User {
 }
 
 model GameRoom {
-  id              Int     @id @default(autoincrement())
-  master          User    @relation(fields: [masterId], references: [id])
-  masterId        Int
-  numberOfPlayers Int
-  sheets          Sheet[]
+  id       Int     @id @default(autoincrement())
+  master   User    @relation(fields: [masterId], references: [id])
+  masterId Int
+  sheets   Sheet[]
+  name     String
 }
 
 model Sheet {
@@ -31,4 +31,7 @@ model Sheet {
   playerId   Int
   gameRoom   GameRoom? @relation(fields: [gameRoomId], references: [id])
   gameRoomId Int?
+  characterInfo String
+
 }
+
