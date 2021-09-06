@@ -5,8 +5,8 @@ import { signupRouter } from "./signup";
 import { sessionRouter } from "./session";
 import { usersRouter } from "./users";
 import { getValidateAuthSessionWithExceptions } from "@/middlewares/auth";
-import { newSheetRouter } from "./newSheet";
-import { newGameRoomRouter } from "./newGameRoom";
+import { sheetRouter } from "./sheets";
+import { gameRoomRouter } from "./gamerooms";
 
 const apiRouter = Router();
 
@@ -16,7 +16,7 @@ apiRouter.use("/logout", logoutRouter);
 apiRouter.use("/signup", signupRouter);
 apiRouter.use("/session", sessionRouter);
 apiRouter.use("/users", usersRouter);
-apiRouter.use("/sheet/create", newSheetRouter);
-apiRouter.use("/gameroom/create", newGameRoomRouter);
+apiRouter.use("/sheets", sheetRouter);
+apiRouter.use("/gamerooms", gameRoomRouter);
 
 export { apiRouter };
